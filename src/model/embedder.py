@@ -11,7 +11,7 @@ import torch
 from .transformer import TransformerModel
 from ..data.dictionary import Dictionary, BOS_WORD, EOS_WORD, PAD_WORD, UNK_WORD, MASK_WORD
 from ..utils import AttrDict
-
+import pdb
 
 logger = getLogger()
 
@@ -33,6 +33,7 @@ class SentenceEmbedder(object):
 
         # reload dictionary and model parameters
         dico = Dictionary(reloaded['dico_id2word'], reloaded['dico_word2id'], reloaded['dico_counts'])
+        pdb.set_trace()
         pretrain_params = AttrDict(reloaded['params'])
         pretrain_params.n_words = len(dico)
         pretrain_params.bos_index = dico.index(BOS_WORD)

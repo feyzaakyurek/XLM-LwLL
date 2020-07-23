@@ -12,7 +12,7 @@ import torch
 import socket
 import signal
 import subprocess
-
+import pdb
 
 logger = getLogger()
 
@@ -54,13 +54,14 @@ def init_distributed_mode(params):
         - world_size
     """
     params.is_slurm_job = 'SLURM_JOB_ID' in os.environ and not params.debug_slurm
+#     params.is_slurm_job = False
     print("SLURM job: %s" % str(params.is_slurm_job))
 
     # SLURM job
     if params.is_slurm_job:
 
         assert params.local_rank == -1   # on the cluster, this is handled by SLURM
-
+        print("I am a slurm job.")
         SLURM_VARIABLES = [
             'SLURM_JOB_ID',
             'SLURM_JOB_NODELIST', 'SLURM_JOB_NUM_NODES', 'SLURM_NTASKS', 'SLURM_TASKS_PER_NODE',

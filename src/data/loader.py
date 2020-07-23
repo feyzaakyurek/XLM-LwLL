@@ -4,7 +4,8 @@
 # This source code is licensed under the license found in the
 # LICENSE file in the root directory of this source tree.
 #
-
+# import warnings
+# warnings.filterwarnings("ignore", category=UserWarning)
 from logging import getLogger
 import os
 import numpy as np
@@ -210,6 +211,8 @@ def load_para_data(params, data):
 
             # for validation and test set, enumerate sentence per sentence
             if splt != 'train':
+                dataset.remove_empty_sentences()
+                dataset.remove_long_sentences(params.max_len)
                 dataset.tokens_per_batch = -1
 
             # if there are several processes on the same machine, we can split the dataset

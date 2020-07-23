@@ -5,6 +5,9 @@
 # LICENSE file in the root directory of this source tree.
 #
 
+# import warnings
+# warnings.filterwarnings("ignore", category=UserWarning)
+
 import json
 import random
 import argparse
@@ -16,6 +19,7 @@ from src.model import check_model_params, build_model
 from src.model.memory import HashingMemory
 from src.trainer import SingleTrainer, EncDecTrainer
 from src.evaluation.evaluator import SingleEvaluator, EncDecEvaluator
+
 
 
 def get_parser():
@@ -218,8 +222,9 @@ def get_parser():
 def main(params):
 
     # initialize the multi-GPU / multi-node training
+    print("I am in main.")
     init_distributed_mode(params)
-
+    print("I started dist training.")
     # initialize the experiment
     logger = initialize_exp(params)
 

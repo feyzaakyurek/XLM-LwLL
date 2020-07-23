@@ -15,7 +15,7 @@ lg=$1  # input language
 
 # data path
 MAIN_PATH=$PWD
-WIKI_PATH=$PWD/data/wiki
+WIKI_PATH=$PWD/data/data17lang/wiki
 
 # tools paths
 TOOLS_PATH=$PWD/tools
