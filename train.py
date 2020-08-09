@@ -222,9 +222,8 @@ def get_parser():
 def main(params):
 
     # initialize the multi-GPU / multi-node training
-    print("I am in main.")
     init_distributed_mode(params)
-    print("I started dist training.")
+    
     # initialize the experiment
     logger = initialize_exp(params)
 
