@@ -201,6 +201,12 @@ class Dictionary(object):
                 if word_id == dico.unk_index:
                     unk_words[w] = unk_words.get(w, 0) + 1
                     count_unk += 1
+                    
+            # cut if too long 
+#             if len(indexed) > 500:
+#                 indexed = indexed[:500]
+#                 print('Found too long sentence (length=%i) at line %i cutting it to max len is %i' % (len(indexed), i, 500))
+            
             # add sentence
             positions.append([len(sentences), len(sentences) + len(indexed)])
             sentences.extend(indexed)

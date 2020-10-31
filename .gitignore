@@ -1,11 +1,18 @@
 # Created by https://www.gitignore.io/api/python
 # Edit at https://www.gitignore.io/?templates=python
+apex
+scripts/old_scripts
+scripts/arabic_scripts
+tools/
+processed.en-so.comparable+wmt19.som.zip
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
+*.stderr
+*.stdout
 
 # C extensions
 *.so

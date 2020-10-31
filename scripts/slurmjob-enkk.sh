@@ -7,7 +7,7 @@
 #SBATCH --gres=gpu:volta:2
 #SBATCH --output=%j.stdout
 #SBATCH --error=%j.stderr
-#SBATCH --job-name=lm-enar-translit
+#SBATCH --job-name=lm-enkk-8g
 
 ##export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
 
@@ -20,28 +20,28 @@ LOG_STDERR="$SLURM_JOB_ID.stderr"
 date >> $LOG_STDOUT
 which python >> $LOG_STDOUT
 echo "---Beginning program ---" >> $LOG_STDOUT
-echo "Exp name     : lm-enar-translit" >> $LOG_STDOUT
+echo "Exp name     : lm-enkk-8g" >> $LOG_STDOUT
 echo "SLURM Job ID : $SLURM_JOB_ID" >> $LOG_STDOUT
-echo "SBATCH script: slurmjob-aren.sh" >> $LOG_STDOUT
+echo "SBATCH script: slurmjob-enkk.sh" >> $LOG_STDOUT
 
 srun python train.py \
---master_port 10101 \
---exp_name test_enar_mlm \
+--master_port 10102 \
+--exp_name test_enkk_mlm \
 --dump_path ./dumped/ \
---data_path ./data/datatranslit/ar-en/ \
---lgs "en-ar" \
+--data_path ./data/processed/en-kk/en-kk-10M/en-kk \
+--lgs "en-kk" \
 --clm_steps "" \
---mlm_steps "en,ar" \
+--mlm_steps "en,kk" \
 --emb_dim 1024 \
 --n_layers 6 \
 --n_heads 8 \
 --dropout 0.1 \
 --attention_dropout 0.1 \
 --gelu_activation true \
---batch_size 70 \
+--batch_size 64 \
 --bptt 256 \
 --optimizer "adam,lr=0.0001" \
---epoch_size 300000 \
+--epoch_size 100000 \
 --validation_metrics "_valid_mlm_ppl" \
 --stopping_criterion "_valid_mlm_ppl,10" &
 

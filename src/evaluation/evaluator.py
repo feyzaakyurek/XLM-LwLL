@@ -136,7 +136,7 @@ class Evaluator(object):
             _lang1, _lang2 = (lang1, lang2) if lang1 < lang2 else (lang2, lang1)
             iterator = self.data['para'][(_lang1, _lang2)][data_set].get_iterator(
                 shuffle=False,
-                group_by_size=True,
+                group_by_size=False,
                 n_sentences=n_sentences
             )
 

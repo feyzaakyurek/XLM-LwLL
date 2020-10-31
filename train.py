@@ -215,6 +215,9 @@ def get_parser():
                         help="Multi-GPU - Local rank")
     parser.add_argument("--master_port", type=int, default=-1,
                         help="Master port (for multi-node SLURM jobs)")
+    
+#     parser.add_argument("--no_lang_embed_enc", type=bool_flag, default=False,
+#                         help="Don't use language embedding in the encoder if True.")
 
     return parser
 

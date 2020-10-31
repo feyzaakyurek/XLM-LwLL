@@ -86,6 +86,7 @@ def check_model_params(params):
         else:
             s = params.reload_model.split(',')
             assert len(s) == 2
+            print("******** ", s)
             assert all([x == '' or os.path.isfile(x) for x in s])
 
 

@@ -259,6 +259,7 @@ class TransformerModel(nn.Module):
         self.dico = dico
         self.id2lang = params.id2lang
         self.lang2id = params.lang2id
+        self.mlm_steps = params.mlm_steps
         self.use_lang_emb = getattr(params, 'use_lang_emb', True)
         assert len(self.dico) == self.n_words
         assert len(self.id2lang) == len(self.lang2id) == self.n_langs
@@ -277,7 +278,8 @@ class TransformerModel(nn.Module):
         if params.sinusoidal_embeddings:
             create_sinusoidal_embeddings(N_MAX_POSITIONS, self.dim, out=self.position_embeddings.weight)
         if params.n_langs > 1 and self.use_lang_emb:
-            self.lang_embeddings = Embedding(self.n_langs, self.dim)
+            if self.is_decoder or self.mlm_steps != '':
+                self.lang_embeddings = Embedding(self.n_langs, self.dim)
         self.embeddings = Embedding(self.n_words, self.dim, padding_idx=self.pad_index)
         self.layer_norm_emb = nn.LayerNorm(self.dim, eps=1e-12)
 
@@ -383,7 +385,8 @@ class TransformerModel(nn.Module):
         tensor = self.embeddings(x)
         tensor = tensor + self.position_embeddings(positions).expand_as(tensor)
         if langs is not None and self.use_lang_emb:
-            tensor = tensor + self.lang_embeddings(langs)
+            if self.is_decoder or self.mlm_steps != '':
+                tensor = tensor + self.lang_embeddings(langs)
         tensor = self.layer_norm_emb(tensor)
         tensor = F.dropout(tensor, p=self.dropout, training=self.training)
         tensor *= mask.unsqueeze(-1).to(tensor.dtype)

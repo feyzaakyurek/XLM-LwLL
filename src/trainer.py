@@ -431,7 +431,7 @@ class Trainer(object):
             pred_mask = np.random.rand(slen, bs) <= params.word_pred
             pred_mask = torch.from_numpy(pred_mask.astype(np.bool))
         else:
-            x_prob = params.mask_scores[x.flatten()]
+            x_prob = params.mask_scores[x.flatten()].float()
             n_tgt = math.ceil(params.word_pred * slen * bs)
             tgt_ids = np.random.choice(len(x_prob), n_tgt, replace=False, p=x_prob / x_prob.sum())
             pred_mask = torch.zeros(slen * bs, dtype=torch.bool)
